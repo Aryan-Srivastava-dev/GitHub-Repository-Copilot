@@ -63,7 +63,7 @@ const Carousel = () => {
   return (
     <div className="relative max-w-[80%] mx-auto">
 
-          <div className="overflow-hidden w-[60%] mx-auto my-5">
+      <div className="overflow-hidden w-[60%] mx-auto my-5">
   <div
     className="flex transition-transform duration-700 ease-in-out"
     style={{
@@ -88,12 +88,12 @@ const Carousel = () => {
           </p>
 
           {/* User */}
-          <div className="flex items-center gap-2">
+          <div className="flex gap-3">
             <div className="w-10 h-10 rounded-full bg-linear-to-br from-purple-500 to-cyan-400 flex items-center justify-center">
               <img
                 src={github}
                 alt="GitHub"
-                className="w-8 h-8"
+                className="w-8 h-8 px-0.5"
               />
             </div>
 
