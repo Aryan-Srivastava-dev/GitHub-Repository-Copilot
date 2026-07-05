@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import "dotenv/config";
 import { prisma, pool } from "./lib/prisma.js";
 import authRouter from "./routes/authRoute.js";
 
@@ -8,7 +9,8 @@ const port = process.env.PORT;
 const app = express();
 
 app.use(cors({
-    origin: ""
+    origin: `http://localhost:${process.env.FRONTEND_PORT}`,
+    credentials: true
 }));
 app.use(cookieParser());
 app.use(express.json());
