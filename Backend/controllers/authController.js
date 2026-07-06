@@ -23,17 +23,14 @@ export const callback = async (req, res) => {
         const { code, state, error } = req.query;
         const savedState = req.cookies.oauth_state;
 
-        if(error) {
-            res.status(400).json({error: "GitHub access denied"});
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
+        if (error) {
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=access_denied`);
         }
-        if(!code) {
-            res.status(400).json({error: "Authorization code required"});
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
+        if (!code) {
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=no_code`);
         }
-        if(state !== savedState) {
-            res.status(400).json({error: "Invalid state"});
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
+        if (state !== savedState) {
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=invalid_state`);
         }
 
         res.clearCookie("oauth_state");
@@ -51,23 +48,20 @@ export const callback = async (req, res) => {
         });
 
         if(!response.ok) {
-            res.status(500).json({error: "Failed to fetch access token"});
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=access_token_not_fetched`);
         }
 
         const data = await response.json();
         if(data.error) {
-            res.status(400).json({error: data.error_description});
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=${data.error_description}`);
         }
         
         const accessToken = data.access_token;
         if(!accessToken) {
-            res.status(500).json({error: "Access token not received"});
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=access_token_not_received`);
         }
 
-        res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/app/dashboard`);
+        return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/app/dashboard`);
     } catch(error) {
         console.error(error);
         res.status(500).json({error: "Internal server error"});
