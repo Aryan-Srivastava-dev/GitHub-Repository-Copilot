@@ -60,6 +60,8 @@ export const callback = async (req, res) => {
         if(!accessToken) {
             return res.status(500).json({error: "Access token not received"});
         }
+
+        res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/app/dashboard`);
     } catch(error) {
         console.error(error);
         res.status(500).json({error: "Internal server error"});
