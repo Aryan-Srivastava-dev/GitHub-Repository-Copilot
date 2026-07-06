@@ -24,13 +24,16 @@ export const callback = async (req, res) => {
         const savedState = req.cookies.oauth_state;
 
         if(error) {
-            return res.status(400).json({error: "GitHub access denied"});
+            res.status(400).json({error: "GitHub access denied"});
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
         }
         if(!code) {
-            return res.status(400).json({error: "Authorization code required"});
+            res.status(400).json({error: "Authorization code required"});
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
         }
         if(state !== savedState) {
-            return res.status(400).json({error: "Invalid state"});
+            res.status(400).json({error: "Invalid state"});
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
         }
 
         res.clearCookie("oauth_state");
@@ -48,17 +51,20 @@ export const callback = async (req, res) => {
         });
 
         if(!response.ok) {
-            return res.status(500).json({error: "Failed to fetch access token"});
+            res.status(500).json({error: "Failed to fetch access token"});
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
         }
 
         const data = await response.json();
         if(data.error) {
-            return res.status(400).json({error: data.error_description});
+            res.status(400).json({error: data.error_description});
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
         }
         
         const accessToken = data.access_token;
         if(!accessToken) {
-            return res.status(500).json({error: "Access token not received"});
+            res.status(500).json({error: "Access token not received"});
+            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}`);
         }
 
         res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/app/dashboard`);
