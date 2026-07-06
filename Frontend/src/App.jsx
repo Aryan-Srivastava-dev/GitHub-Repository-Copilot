@@ -1,15 +1,14 @@
 import './App.css'
-import LandingPage from './pages/LandingPage'
 import "flowbite"
+import './index.css'
+import React from 'react';
+import { createRoot } from 'react-dom/client'
+import { RouterProvider} from 'react-router-dom';
+import Routes from "./router/Routes"
 
-function App() {
- 
 
-  return (
-   <div>
-      <LandingPage/>
-   </div>
-  )
-}
-
-export default App
+createRoot(document.getElementById('root')).render(
+  
+  <RouterProvider router={Routes}/>
+  
+)

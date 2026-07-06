@@ -15,6 +15,9 @@ import Carousel from "../components/Carousel"
 
 
 export default function LandingPage() {
+  const loginHandler = ()=>{
+    console.log("login");
+  }  
   return (
     <div className="bg-linear-to-br from-[#030712] via-[#0B1026] to-[#020617] text-white">
         <nav className="border-b border-slate-800" id="home">
@@ -30,7 +33,7 @@ export default function LandingPage() {
                     <a href="#docs">Docs</a>
                 </div>
 
-                <button className="flex gap-2 items-center bg-linear-to-r from-violet-500 to-cyan-500 px-4 py-2 rounded-lg hover:scale-110 duration-700 cursor-pointer">
+                <button onClick={loginHandler} className="flex gap-2 items-center bg-linear-to-r from-violet-500 to-cyan-500 px-4 py-2 rounded-lg hover:scale-105 duration-700 cursor-pointer">
                     <img src={github} alt="github_icon" className="w-6 h-6"/>
                     Continue with Github
                 </button>
@@ -49,7 +52,7 @@ export default function LandingPage() {
                 review code and visualize architecture.
             </p>
 
-            <button className="px-8 py-4 gap-4 mt-10 rounded-xl bg-linear-to-r from-violet-500 to-cyan-500 hover:scale-110 duration-600 cursor-pointer">
+            <button onClick={loginHandler} className="px-8 py-4 gap-4 mt-10 rounded-xl bg-linear-to-r from-violet-500 to-cyan-500 hover:scale-105 duration-600 cursor-pointer">
                 Continue with GitHub
             </button>
         </section>
