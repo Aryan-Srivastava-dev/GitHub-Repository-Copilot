@@ -12,12 +12,16 @@ import app_logo from "../assets/app_logo.png"
 import linkedin from "../assets/linkedin.png"
 import twitter from "../assets/twitter.png"
 import Carousel from "../components/Carousel"
+import { useEffect } from "react"
+import {useNavigate} from "react-router-dom"
 
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
   const loginHandler = ()=>{
-    console.log("login");
-  }  
+    window.location.href = "http://localhost:3000/github/login";
+  }
   return (
     <div className="bg-linear-to-br from-[#030712] via-[#0B1026] to-[#020617] text-white">
         <nav className="border-b border-slate-800" id="home">
@@ -29,7 +33,7 @@ export default function LandingPage() {
 
                 <div className="flex gap-8">
                     <a href="#features">Features</a>
-                    <a href="#how it works">How it works</a>
+                    <a href="#how-it-works">How it works</a>
                     <a href="#docs">Docs</a>
                 </div>
 
@@ -130,7 +134,7 @@ export default function LandingPage() {
                     </div>
             </section>
 
-            <section className="p-15 bg-gray-950 flex flex-col justify-center items-center" id="how it works">
+            <section className="p-15 bg-gray-950 flex flex-col justify-center items-center" id="how-it-works">
                 <h2 className="text-3xl text-cyan-200">HOW IT WORKS</h2>
                 <div className="border-t-2 border-slate-700 w-[90%]  my-10 flex flex-col justify-center items-center">
                     <h1 className="text-5xl mt-10 font-normal text-center">From repo to insight in 4 steps</h1>
@@ -230,7 +234,7 @@ export default function LandingPage() {
                         <h1 className="font-bold mb-2">Product</h1>
                         <ul className="text-gray-500">
                             <li><a href="#features">Features</a></li>
-                            <li><a href="#how it works">Work</a></li>
+                            <li><a href="#how-it-works">Work</a></li>
                             <li><a href="#docs">Docs</a></li>
                         </ul>
                     </div>
