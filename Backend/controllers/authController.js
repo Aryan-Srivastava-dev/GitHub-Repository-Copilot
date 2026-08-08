@@ -23,14 +23,14 @@ export const callback = async (req, res) => {
         const { code, state, error } = req.query;
         const savedState = req.cookies.oauth_state;
 
-        if (error) {
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=access_denied`);
+        if(error) {
+            return res.status(400).json({error: "GitHub access denied"});
         }
-        if (!code) {
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=no_code`);
+        if(!code) {
+            return res.status(400).json({error: "Authorization code required"});
         }
-        if (state !== savedState) {
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=invalid_state`);
+        if(state !== savedState) {
+            return res.status(400).json({error: "Invalid state"});
         }
 
         res.clearCookie("oauth_state");
@@ -48,20 +48,20 @@ export const callback = async (req, res) => {
         });
 
         if(!response.ok) {
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=access_token_not_fetched`);
+            return res.status(500).json({error: "Failed to fetch access token"});
         }
 
         const data = await response.json();
         if(data.error) {
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=${data.error_description}`);
+            return res.status(400).json({error: data.error_description});
         }
         
         const accessToken = data.access_token;
         if(!accessToken) {
-            return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/?error=access_token_not_received`);
+            return res.status(500).json({error: "Access token not received"});
         }
 
-        return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/app/dashboard`);
+        res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/app/dashboard`);
     } catch(error) {
         console.error(error);
         res.status(500).json({error: "Internal server error"});
