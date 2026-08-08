@@ -1,6 +1,6 @@
 import "dotenv/config";
 import crypto from "crypto";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 
 export const login = (req, res) => {
